@@ -42,6 +42,13 @@ public class MedicineStockServiceImpl implements MedicineStockService{
 		log.info("END");
 		return true;
 	}
+	@Override
+	public List<MedicineStock> getMedicineByTargetAilment(String treatingAilment) {
+		log.info("START");
+		log.info("END");
+		return repository.getMedicineByTargetAilment(treatingAilment);
+	}
+	
 
 
 }
