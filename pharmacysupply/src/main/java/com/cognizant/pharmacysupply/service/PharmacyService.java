@@ -13,6 +13,6 @@ public interface PharmacyService {
 
 	public List<MedicineDemand> getMedicineDemand();
 
-	public List<PharmacyMedicineSupply> getPharmacySupplyCount(List<MedicineDemand> medicineDemandList)
+	public List<PharmacyMedicineSupply> getPharmacySupplyCount(String token, List<MedicineDemand> medicineDemandList)
 			throws MedicineNotFoundException;
 }
