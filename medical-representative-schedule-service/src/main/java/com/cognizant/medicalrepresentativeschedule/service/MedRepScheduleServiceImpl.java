@@ -92,8 +92,8 @@ public class MedRepScheduleServiceImpl implements MedRepScheduleService {
 			repSchedule.setMeetingSlot("1 PM to 2 PM");
 			repSchedule.setTreatingAilment(doctor.getTreatingAilment());
 			
-			//String[] medicinesByTreatingAilment = medicineStockClient.getMedicinesByTreatingAilment(token, doctor.getTreatingAilment());
-			//repSchedule.setMedicines(medicinesByTreatingAilment);
+			String[] medicinesByTreatingAilment = medicineStockClient.getMedicinesByTreatingAilment(token, doctor.getTreatingAilment());
+			repSchedule.setMedicines(medicinesByTreatingAilment);
 			
 			log.debug("repSchedule : {}", repSchedule);
 

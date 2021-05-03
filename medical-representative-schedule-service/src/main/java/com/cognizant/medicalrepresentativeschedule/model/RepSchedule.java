@@ -21,7 +21,7 @@ public class RepSchedule {
 	private String meetingSlot;
 	private LocalDate meetingDate;
 	private String doctorContactNumber;
-	//private String[] medicines;
+	private String[] medicines;
 	private String treatingAilment;
 
 }
