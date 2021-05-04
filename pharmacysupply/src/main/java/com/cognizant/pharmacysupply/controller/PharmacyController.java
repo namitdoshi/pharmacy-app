@@ -29,40 +29,47 @@ public class PharmacyController {
 	private PharmacyServiceImpl pharmacyService;
 	
 	@PostMapping("/pharmacy-supply")
-	public List<PharmacyMedicineSupply> getPharmacySupply(@Valid @RequestBody List<MedicineDemand> medicineDemandList) throws MedicineNotFoundException {
+	public ResponseEntity<?> getPharmacySupply(@RequestHeader(name = "Authorization") String token,
+			@Valid @RequestBody List<MedicineDemand> medicineDemandList) throws MedicineNotFoundException {
 		log.info("Start");
 
 		log.debug("medicineDemandList {}:", medicineDemandList);
 		List<PharmacyMedicineSupply> pharmacySupply = null;
-//		if (pharmacyService.validateToken(token)) {
-//			pharmacySupply = pharmacyService.getPharmacySupplyCount(token, medicineDemandList);
-			pharmacySupply = pharmacyService.getPharmacySupplyCount(medicineDemandList);
+		if (pharmacyService.validateToken(token)) {
+			pharmacySupply = pharmacyService.getPharmacySupplyCount(token, medicineDemandList);
 			
 			if (pharmacySupply == null)  {
-				return pharmacySupply;
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 			}
 			
 			log.info("End");
-			return pharmacySupply;
-//		}
-//		log.info("End");
-//		throw new TokenValidationFailedException("Token is no longer valid");
+			return new ResponseEntity<>(pharmacySupply, HttpStatus.OK);
+		}
+		log.info("End");
+		throw new TokenValidationFailedException("Token is no longer valid");
 	}
 	
 
 	@GetMapping("/getMedicineSupply")
-	public List<PharmacyMedicineSupply> getMedicineSupply() {
+	public ResponseEntity<?> getMedicineSupply(@RequestHeader("Authorization") String token) {
 		List<PharmacyMedicineSupply> medicineSupply = null;
+		if (pharmacyService.validateToken(token)) {
 			medicineSupply = pharmacyService.getMedicineSupply();
-			return medicineSupply;
+			return new ResponseEntity<>(medicineSupply, HttpStatus.OK);
+		}
+		throw new TokenValidationFailedException("Token is no longer valid");
 	}
 
-
+// To do: this mapping can be removed or simplified
 	@GetMapping("/getMedicineDemand")
-	public List<MedicineDemand> getMedicineDemand() {
+	public ResponseEntity<?> getMedicineDemand(@RequestHeader(name = "Authorization") String token) {
 		List<MedicineDemand> medicineDemand = null;
+		if (pharmacyService.validateToken(token)) {
 			medicineDemand = pharmacyService.getMedicineDemand();
-			return medicineDemand;
+//			medicineDemand = pharmacyService.getMedicineSupply();
+			return new ResponseEntity<>(medicineDemand, HttpStatus.OK);
+		}
+		throw new TokenValidationFailedException("Token is no longer valid");
 	}
 
 }

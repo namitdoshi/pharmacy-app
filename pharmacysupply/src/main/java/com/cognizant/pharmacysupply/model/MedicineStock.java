@@ -31,6 +31,6 @@ public class MedicineStock {
 	@Future
 	private Date expiryDate;
 	@Min(value = 1, message = "Number of tablet must be greater than zero")
-	private int tabletsInStock;
+	private int numberOfTabletsInStock;
 
 }
