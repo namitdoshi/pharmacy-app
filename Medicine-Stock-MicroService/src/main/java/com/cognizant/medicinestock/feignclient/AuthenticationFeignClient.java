@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.cognizant.medicinestock.model.JwtResponse;
 
-@FeignClient(name = "authorization-service", url ="localhost:8084")
+//@FeignClient(name = "authorization-service", url ="localhost:8084")
+@FeignClient(name = "authorization-service")
 public interface AuthenticationFeignClient {
 
 

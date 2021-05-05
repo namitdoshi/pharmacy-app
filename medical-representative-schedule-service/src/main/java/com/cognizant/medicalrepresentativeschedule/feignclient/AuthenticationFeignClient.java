@@ -8,7 +8,8 @@ import com.cognizant.medicalrepresentativeschedule.model.JwtResponse;
 
 
 
-@FeignClient(name = "authorization-service", url = "localhost:8084")
+//@FeignClient(name = "authorization-service", url = "localhost:8084")
+@FeignClient(name = "authorization-service")
 public interface AuthenticationFeignClient {
 
 

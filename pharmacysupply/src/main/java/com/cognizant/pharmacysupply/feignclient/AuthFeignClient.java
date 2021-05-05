@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.cognizant.pharmacysupply.model.JwtResponse;
 
-@FeignClient(name = "authorization-service", url = "localhost:8084")
+//@FeignClient(name = "authorization-service", url = "localhost:8084")
+@FeignClient(name = "authorization-service")
 public interface AuthFeignClient {
 
 	@RequestMapping(value = "/api/auth/validate", method = RequestMethod.GET)

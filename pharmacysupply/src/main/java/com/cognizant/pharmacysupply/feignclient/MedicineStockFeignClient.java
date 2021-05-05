@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.cognizant.pharmacysupply.model.MedicineStock;
 
-@FeignClient(url = "localhost:8081", name = "medicine-stock-service")
+//@FeignClient(url = "localhost:8081", name = "medicine-stock-service")
+@FeignClient(name = "medicine-stock-service")
 public interface MedicineStockFeignClient {
 	
 	@PostMapping("/api/medicine-stock/get-stock-count/{medicine}")
