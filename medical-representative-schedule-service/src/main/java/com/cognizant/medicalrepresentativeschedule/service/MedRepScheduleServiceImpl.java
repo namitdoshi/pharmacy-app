@@ -4,13 +4,13 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cognizant.medicalrepresentativeschedule.dao.MedRepRepository;
-import com.cognizant.medicalrepresentativeschedule.exception.InvalidDateException;
 import com.cognizant.medicalrepresentativeschedule.exception.TokenValidationFailedException;
 import com.cognizant.medicalrepresentativeschedule.feignclient.AuthenticationFeignClient;
 import com.cognizant.medicalrepresentativeschedule.feignclient.MedicineStockFeignClient;
@@ -40,10 +40,11 @@ public class MedRepScheduleServiceImpl implements MedRepScheduleService {
 			throws TokenValidationFailedException {
 		log.info("Start");
 
-		if (!isValidSession(token)) {
+		boolean b = isValidSession(token);
+		if (!b) {
 			log.info("End");
 
-			return null;
+			return Collections.emptyList();
 		}
 
 		List<RepSchedule> repSchedules = new ArrayList<>();
@@ -68,12 +69,8 @@ public class MedRepScheduleServiceImpl implements MedRepScheduleService {
 			return repSchedules;
 		}
 
-		if (scheduleStartDate.equals(today)) {
-
-			if (now.isAfter(one)) {
+		if (scheduleStartDate.equals(today) && now.isAfter(one)) {
 				localDate = localDate.plusDays(1);
-			}
-
 		}
 
 		for (int i = 0; i < doctors.size(); i++) {

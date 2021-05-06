@@ -20,10 +20,12 @@ public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
 
 	@Autowired
 	ErrorResponse errorResponse;
-
+	
+	private static final String START="START";
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorResponse> handleAllErrors(Exception ex) {
-		log.info("Start");
+		log.info(START);
 
 		errorResponse.setMessage(ex.getMessage());
 		errorResponse.setReason("BAD_REQUEST");
@@ -37,7 +39,7 @@ public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	public ResponseEntity<ErrorResponse> handleMethodArgTypeMismatchException(MethodArgumentTypeMismatchException e) {
-		log.info("Start");
+		log.info(START);
 
 		errorResponse.setMessage("Please enter the date in dd-MM-yyyy format");
 		errorResponse.setReason("You need to provide date in dd-MM-yyyy format");
@@ -51,7 +53,7 @@ public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(InvalidDateException.class)
 	public ResponseEntity<ErrorResponse> handleDateNotFoundException(InvalidDateException e) {
-		log.info("Start");
+		log.info(START);
 
 		errorResponse.setMessage("Please enter the date in dd-MM-yyyy format");
 		errorResponse.setReason("You need to provide date in dd-MM-yyyy format");
@@ -65,7 +67,7 @@ public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(TokenValidationFailedException.class)
 	public ResponseEntity<ErrorResponse> handleTokenValidationFailedException(TokenValidationFailedException e) {
-		log.info("Start");
+		log.info(START);
 
 		errorResponse.setMessage("Your token is invalid");
 		errorResponse.setReason("Your token might have been expired or you have entered wrong token");
@@ -74,7 +76,7 @@ public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
 
 		log.info("End");
 
-		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.FORBIDDEN);
+		return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
 	}
 
 }

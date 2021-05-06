@@ -6,11 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cognizant.medicalrepresentativeschedule.dao.MedRepRepository;
-import com.cognizant.medicalrepresentativeschedule.exception.TokenValidationFailedException;
-import com.cognizant.medicalrepresentativeschedule.feignclient.AuthenticationFeignClient;
-import com.cognizant.medicalrepresentativeschedule.model.JwtResponse;
-//import com.cognizant.medicalrepresentativeschedule.feignclient.AuthenticationFeignClient;
-//import com.cognizant.medicalrepresentativeschedule.model.JwtResponse;
 import com.cognizant.medicalrepresentativeschedule.model.MedicalRepresentative;
 
 import lombok.extern.slf4j.Slf4j;
