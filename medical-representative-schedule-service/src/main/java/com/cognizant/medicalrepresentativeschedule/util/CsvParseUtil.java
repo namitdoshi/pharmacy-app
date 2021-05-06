@@ -14,6 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CsvParseUtil {
 
+	private CsvParseUtil() {
+	}
+	
 	public static List<Doctor> parseDoctors() {
 
 		log.info("Start");
