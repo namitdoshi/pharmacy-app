@@ -6,7 +6,7 @@ import com.cognizant.medicalrepresentativeschedule.exception.TokenValidationFail
 import com.cognizant.medicalrepresentativeschedule.model.MedicalRepresentative;
 
 public interface MedRepService {
-	
-	public List<MedicalRepresentative> getMedicalRepresentatives(String token) throws TokenValidationFailedException;
+
+	public List<MedicalRepresentative> getMedicalRepresentatives() throws TokenValidationFailedException;
 
 }

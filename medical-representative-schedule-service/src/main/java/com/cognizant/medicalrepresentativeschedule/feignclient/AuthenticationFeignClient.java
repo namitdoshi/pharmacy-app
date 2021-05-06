@@ -6,14 +6,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.cognizant.medicalrepresentativeschedule.model.JwtResponse;
 
-
-
-//@FeignClient(name = "authorization-service", url = "localhost:8084")
-@FeignClient(name = "authorization-service")
+@FeignClient(name = "authorization-service", url = "localhost:8084")
 public interface AuthenticationFeignClient {
-
 
 	@GetMapping(value = "/api/auth/validate")
 	public JwtResponse verifyToken(@RequestHeader(name = "Authorization", required = true) String token);
-	
+
 }

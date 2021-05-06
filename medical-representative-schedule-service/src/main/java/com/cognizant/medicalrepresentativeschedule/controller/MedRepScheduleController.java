@@ -40,11 +40,9 @@ public class MedRepScheduleController {
 	@Autowired
 	private AuthenticationFeignClient authFeignClient;
 
-	@Autowired
-	private MedicineStockFeignClient medicineStockClient;
-
 	@GetMapping("/RepSchedule/{scheduleStartDate}")
-	public ResponseEntity<List<RepSchedule>> getRepSchedule(@RequestHeader(name = "Authorization") final String token, @PathVariable("scheduleStartDate") final String scheduleStartDate)
+	public ResponseEntity<List<RepSchedule>> getRepSchedule(@RequestHeader(name = "Authorization") final String token,
+			@PathVariable("scheduleStartDate") final String scheduleStartDate)
 			throws InvalidDateException, TokenValidationFailedException {
 		log.info("Start");
 
@@ -99,23 +97,13 @@ public class MedRepScheduleController {
 		return true;
 	}
 
-	@GetMapping
-	public ResponseEntity<String[]> getMedicinesByTreatingAilment(@RequestHeader(name = "Authorization") String token) {
-		log.info("Start");
-		
-		final ResponseEntity<String[]> responseEntity = ResponseEntity.of(Optional.of(medicineStockClient.getMedicinesByTreatingAilment(token, "medicine")));
-		
-		log.info("End");
-
-		return responseEntity;
-	}
-
 	@GetMapping("/medicalRepresentatives")
-	public List<MedicalRepresentative> getMedicalRepresentatives(@RequestHeader(name = "Authorization") final String token) throws TokenValidationFailedException {
+	public List<MedicalRepresentative> getMedicalRepresentatives(
+			@RequestHeader(name = "Authorization") final String token) throws TokenValidationFailedException {
 		log.info("Start");
 
-		List<MedicalRepresentative> medicalRepresentatives = medicalRepresentativeService.getMedicalRepresentatives(token);
-		
+		List<MedicalRepresentative> medicalRepresentatives = medicalRepresentativeService.getMedicalRepresentatives();
+
 		log.info("End");
 		return medicalRepresentatives;
 	}
@@ -123,9 +111,9 @@ public class MedRepScheduleController {
 	@GetMapping("/doctors")
 	public List<Doctor> getDoctors() {
 		log.info("Start");
-		
+
 		List<Doctor> doctors = CsvParseUtil.parseDoctors();
-		
+
 		log.info("End");
 		return doctors;
 	}

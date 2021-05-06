@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cognizant.medicalrepresentativeschedule.dao.MedRepRepository;
+import com.cognizant.medicalrepresentativeschedule.exception.InvalidDateException;
 import com.cognizant.medicalrepresentativeschedule.exception.TokenValidationFailedException;
 import com.cognizant.medicalrepresentativeschedule.feignclient.AuthenticationFeignClient;
 import com.cognizant.medicalrepresentativeschedule.feignclient.MedicineStockFeignClient;
@@ -26,32 +27,33 @@ import lombok.extern.slf4j.Slf4j;
 public class MedRepScheduleServiceImpl implements MedRepScheduleService {
 
 	@Autowired
+	AuthenticationFeignClient authFeignClient;
+
+	@Autowired
 	private MedicineStockFeignClient medicineStockClient;
 
 	@Autowired
 	private MedRepRepository medicalRepresentativeRepository;
-	
-	@Autowired
-	AuthenticationFeignClient authFeignClient;
 
 	@Override
-	public List<RepSchedule> getRepSchedule(String token, LocalDate scheduleStartDate) throws TokenValidationFailedException {
+	public List<RepSchedule> getRepSchedule(String token, LocalDate scheduleStartDate)
+			throws TokenValidationFailedException {
 		log.info("Start");
-		
+
 		if (!isValidSession(token)) {
 			log.info("End");
-			
+
 			return null;
 		}
-		
+
 		List<RepSchedule> repSchedules = new ArrayList<>();
 
 		List<Doctor> doctors = CsvParseUtil.parseDoctors();
-		
+
 		log.debug("docters : {}", doctors);
-		
+
 		List<MedicalRepresentative> medicalRepresentatives = medicalRepresentativeRepository.findAll();
-		
+
 		log.debug("medicalRepresentatives : {}", medicalRepresentatives);
 
 		LocalDate localDate = scheduleStartDate;
@@ -91,10 +93,11 @@ public class MedRepScheduleServiceImpl implements MedRepScheduleService {
 			repSchedule.setMeetingDate(localDate);
 			repSchedule.setMeetingSlot("1 PM to 2 PM");
 			repSchedule.setTreatingAilment(doctor.getTreatingAilment());
-			
-			String[] medicinesByTreatingAilment = medicineStockClient.getMedicinesByTreatingAilment(token, doctor.getTreatingAilment());
+
+			String[] medicinesByTreatingAilment = medicineStockClient.getMedicinesByTreatingAilment(token,
+					doctor.getTreatingAilment());
 			repSchedule.setMedicines(medicinesByTreatingAilment);
-			
+
 			log.debug("repSchedule : {}", repSchedule);
 
 			repSchedules.add(repSchedule);
@@ -103,15 +106,15 @@ public class MedRepScheduleServiceImpl implements MedRepScheduleService {
 		}
 
 		log.debug("repSchedules : {}", repSchedules);
-
 		log.info("End");
 		return repSchedules;
+
 	}
-	
+
 	public Boolean isValidSession(String token) throws TokenValidationFailedException {
-		
+
 		log.info("Start");
-		
+
 		JwtResponse response = authFeignClient.verifyToken(token);
 		if (!response.isValid()) {
 			log.info("End");
@@ -122,7 +125,5 @@ public class MedRepScheduleServiceImpl implements MedRepScheduleService {
 		log.info("End");
 		return true;
 	}
-
-
 
 }
