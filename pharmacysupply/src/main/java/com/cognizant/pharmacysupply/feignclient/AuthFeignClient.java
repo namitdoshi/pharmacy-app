@@ -1,8 +1,7 @@
 package com.cognizant.pharmacysupply.feignclient;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.cognizant.pharmacysupply.model.JwtResponse;
@@ -11,7 +10,7 @@ import com.cognizant.pharmacysupply.model.JwtResponse;
 @FeignClient(name = "authorization-service")
 public interface AuthFeignClient {
 
-	@RequestMapping(value = "/api/auth/validate", method = RequestMethod.GET)
+	@GetMapping(value = "/api/auth/validate")
 	public JwtResponse verifyToken(@RequestHeader(name = "Authorization", required = true) String token);
 
 }

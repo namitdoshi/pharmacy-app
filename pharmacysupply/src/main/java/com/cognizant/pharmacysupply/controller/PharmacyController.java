@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class PharmacyController {
 	
+	private static final String TOKEN_IS_NO_LONGER_VALID = "Token is no longer valid";
 	@Autowired
 	private PharmacyServiceImpl pharmacyService;
 	
@@ -46,7 +47,7 @@ public class PharmacyController {
 			return new ResponseEntity<>(pharmacySupply, HttpStatus.OK);
 		}
 		log.info("End");
-		throw new TokenValidationFailedException("Token is no longer valid");
+		throw new TokenValidationFailedException(TOKEN_IS_NO_LONGER_VALID);
 	}
 	
 
@@ -57,7 +58,7 @@ public class PharmacyController {
 			medicineSupply = pharmacyService.getMedicineSupply();
 			return new ResponseEntity<>(medicineSupply, HttpStatus.OK);
 		}
-		throw new TokenValidationFailedException("Token is no longer valid");
+		throw new TokenValidationFailedException(TOKEN_IS_NO_LONGER_VALID);
 	}
 
 // To do: this mapping can be removed or simplified
@@ -66,10 +67,9 @@ public class PharmacyController {
 		List<MedicineDemand> medicineDemand = null;
 		if (pharmacyService.validateToken(token)) {
 			medicineDemand = pharmacyService.getMedicineDemand();
-//			medicineDemand = pharmacyService.getMedicineSupply();
 			return new ResponseEntity<>(medicineDemand, HttpStatus.OK);
 		}
-		throw new TokenValidationFailedException("Token is no longer valid");
+		throw new TokenValidationFailedException(TOKEN_IS_NO_LONGER_VALID);
 	}
 
 }

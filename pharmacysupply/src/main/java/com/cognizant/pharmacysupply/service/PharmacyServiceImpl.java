@@ -23,6 +23,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class PharmacyServiceImpl implements PharmacyService {
+	private static final String MEDICINE_NOT_FOUND = "Medicine not found";
+
+	private static final String START = "Start";
+
 	@Autowired
 	private MedicineDemandRepository medicineDemandRepo;
 
@@ -41,7 +45,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 	@Override
 	public List<PharmacyMedicineSupply> getPharmacySupplyCount(String token, List<MedicineDemand> medicineDemandList)
 			throws MedicineNotFoundException {
-		log.info("Start");
+		log.info(START);
 		log.info("Medicine Demand List {} ", medicineDemandList);
 		List<PharmacyMedicineSupply> list = new ArrayList<>();
 
@@ -68,7 +72,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 
 	public void setSupply(String token, PharmacyMedicineSupply medicineSupply, MedicineDemand medicineDemand,
 			MedicineStock medicineStock) throws MedicineNotFoundException {
-		log.info("Start");
+		log.info(START);
 		int val = 0;
 		log.info("number of tablets {}", medicineStock.getNumberOfTabletsInStock());
 		if (medicineStock.getNumberOfTabletsInStock() < medicineDemand.getDemandCount()) {
@@ -83,7 +87,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 		try {
 			stockFeignClient.updateNumberOfTabletsInStockByName(token, medicineDemand.getMedicineName(), val);
 		} catch (FeignException ex) {
-			throw new MedicineNotFoundException("Medicine not found");
+			throw new MedicineNotFoundException(MEDICINE_NOT_FOUND);
 		}
 		medicineSupply.setMedicineName(medicineDemand.getMedicineName());
 		log.info("medicineDemand {} medicineSupply {}", medicineDemand, medicineSupply);
@@ -94,18 +98,17 @@ public class PharmacyServiceImpl implements PharmacyService {
 
 	public MedicineStock getNumberOfTablets(String token, MedicineDemand medicineDemand)
 			throws MedicineNotFoundException {
-		// TODO Auto-generated method stub
-		log.info("Start");
+		log.info(START);
 		MedicineStock medicineStock = null;
 		log.info("Medicine : {}", medicineDemand);
 		try {
 			medicineStock = stockFeignClient.getNumberOfTabletsInStockByName(token, medicineDemand.getMedicineName());
 		} catch (FeignException ex) {
-			throw new MedicineNotFoundException("Medicine not found");
+			throw new MedicineNotFoundException(MEDICINE_NOT_FOUND);
 		}
 
 		if (medicineStock == null) {
-			throw new MedicineNotFoundException("Medicine not found");
+			throw new MedicineNotFoundException(MEDICINE_NOT_FOUND);
 		}
 		log.info("End");
 		return medicineStock;
@@ -113,13 +116,13 @@ public class PharmacyServiceImpl implements PharmacyService {
 
 	@Override
 	public List<MedicineDemand> getMedicineDemand() {
-		log.info("Start");
+		log.info(START);
 		return medicineDemandRepo.findAll();
 	}
 
 	@Override
 	public List<PharmacyMedicineSupply> getMedicineSupply() {
-		log.info("Start");
+		log.info(START);
 		return pharmacyMedicineSupplyRepository.findAll();
 	}
 

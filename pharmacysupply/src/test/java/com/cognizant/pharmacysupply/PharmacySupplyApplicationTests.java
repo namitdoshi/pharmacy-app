@@ -7,7 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 class PharmacySupplyApplicationTests {
 
 	@Test
-	void contextLoads() {
-	}
+	   public void main() {
+	      PharmacySupplyApplication.main(new String[] {});
+	   }
 
 }
