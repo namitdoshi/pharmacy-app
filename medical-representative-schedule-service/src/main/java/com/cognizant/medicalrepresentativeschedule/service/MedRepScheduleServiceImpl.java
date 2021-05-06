@@ -70,7 +70,7 @@ public class MedRepScheduleServiceImpl implements MedRepScheduleService {
 		}
 
 		if (scheduleStartDate.equals(today) && now.isAfter(one)) {
-				localDate = localDate.plusDays(1);
+			localDate = localDate.plusDays(1);
 		}
 
 		for (int i = 0; i < doctors.size(); i++) {
@@ -112,15 +112,13 @@ public class MedRepScheduleServiceImpl implements MedRepScheduleService {
 
 		log.info("Start");
 
-		JwtResponse response = authFeignClient.verifyToken(token);
-		if (!response.isValid()) {
-			log.info("End");
-
-			throw new TokenValidationFailedException("Invalid Token");
-		}
+		JwtResponse jwtResponse = authFeignClient.verifyToken(token);
 
 		log.info("End");
-		return true;
+		if (jwtResponse.isValid())
+			return true;
+		throw new TokenValidationFailedException("Token is no longer valid");
+
 	}
 
 }
