@@ -27,7 +27,7 @@ class AuthorizationServiceApplicationTests {
 	
 	
 	@Test
-	public void testloadUserByUsername() throws UsernameNotFoundException  {
+	void testloadUserByUsername() throws UsernameNotFoundException  {
 		
 		UserDetails  user = custDetailsService.loadUserByUsername("root");
 		assertNotNull(user);

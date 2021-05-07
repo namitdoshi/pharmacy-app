@@ -8,10 +8,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognizant.authorization.model.JwtResponse;
@@ -53,7 +53,7 @@ public class JwtAuthenticationController {
 	 * @throws Exception
 	 */
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@PostMapping("/login")
 	public ResponseEntity<UserToken> login(@RequestBody UserLoginCredential userLoginCredentials) throws Exception {
 		log.info("START");
 		String userid = userLoginCredentials.getUserid();
@@ -75,13 +75,14 @@ public class JwtAuthenticationController {
 				jwtutil.generateToken(userdetails)),HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/validate", method = RequestMethod.GET)
+	@GetMapping("/validate")
 	public ResponseEntity<?> getValidity(@RequestHeader("Authorization") final String token) {
 		log.debug("TOKEN : ", token);
 		String newToken = token.substring(7);
 		log.debug("TOKEN AFTER REMOVING BEARER : ", newToken);
 		JwtResponse jwtResponse = new JwtResponse();
-		if (jwtutil.validateToken(newToken)) {
+		boolean tokenValidation = jwtutil.validateToken(newToken);
+		if (tokenValidation) {
 			log.info("TOKEN IS VALID");
 			jwtResponse.setUserid(jwtutil.extractUsername(newToken));
 			jwtResponse.setValid(true);

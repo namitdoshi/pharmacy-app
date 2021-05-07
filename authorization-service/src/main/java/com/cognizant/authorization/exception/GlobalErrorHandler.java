@@ -11,7 +11,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.cognizant.authorization.model.ErrorResponse;
 
-import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -38,7 +37,7 @@ public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
 		response.setReason("BAD REQUEST");
 		log.debug("ERROR RESPONSE {}:", response);
 		log.info("END");
-		return new ResponseEntity<ErrorResponse>(response, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(InternalAuthenticationServiceException.class)
@@ -52,7 +51,7 @@ public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
 		response.setReason("ENTERED CREDENTIALS MIGHT BE WRONG");
 		log.debug("ERROR RESPONSE{}:", response);
 		log.info("END");
-		return new ResponseEntity<ErrorResponse>(response, HttpStatus.FORBIDDEN);
+		return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 	}
 	
 

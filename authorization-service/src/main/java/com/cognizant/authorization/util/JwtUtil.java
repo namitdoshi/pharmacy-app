@@ -18,16 +18,18 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtUtil {
 
 	private String secretkey = "sampletest";
+	private static final String START = "START";
 
 	/**
-	 * This class generates Token and also extracts Username from token.
-	 * This class is taken from Java Brains.
+	 * This class generates Token and also extracts Username from token. This class
+	 * is taken from Java Brains.
+	 * 
 	 * @param token
 	 * @return
 	 */
-	
+
 	public String extractUsername(String token) {
-		log.info("START");
+		log.info(START);
 		log.debug("TOKEN {}:", token);
 		String extractClaim = extractClaim(token, Claims::getSubject);
 		log.debug("EXTRACT CLAIM {}:", extractClaim);
@@ -43,7 +45,7 @@ public class JwtUtil {
 	 */
 
 	public Date extractExpiration(String token) {
-		log.info("START");
+		log.info(START);
 		log.debug("TOKEN {}:", token);
 		Date expiryDate = extractClaim(token, Claims::getExpiration);
 		log.debug("EXPIRY DATE {}:", expiryDate);
@@ -52,13 +54,10 @@ public class JwtUtil {
 
 	}
 
-	
 	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-		log.info("START");
-		log.debug("TOKEN {}:", token);
+		log.info(START);
 		log.debug("CLAIMS RESOLVER {}:", claimsResolver);
 		final Claims claims = extractAllClaims(token);
-		log.debug("CLAIMS {}:", claims);
 		T apply = claimsResolver.apply(claims);
 		log.debug("APPLY {}:", apply);
 		log.info("END");
@@ -66,16 +65,15 @@ public class JwtUtil {
 	}
 
 	private Claims extractAllClaims(String token) {
-		log.info("START");
+		log.info(START);
 		log.debug("TOKEN {}:", token);
 		Claims claims = Jwts.parser().setSigningKey(secretkey).parseClaimsJws(token).getBody();
-		log.debug("CLAIMS {}:", claims);
 		log.info("END");
 		return claims;
 	}
 
 	public Boolean isTokenExpired(String token) {
-		log.info("START");
+		log.info(START);
 		log.debug("TOKEN {}:", token);
 		boolean isTokenExpired = extractExpiration(token).before(new Date());
 		log.debug("CHECK TOKEN EXPIRATION {}:", isTokenExpired);
@@ -90,10 +88,9 @@ public class JwtUtil {
 	 * @return
 	 */
 	public String generateToken(UserDetails userDetails) {
-		log.info("START");
+		log.info(START);
 		log.debug("USER DETAILS {}:", userDetails);
 		Map<String, Object> claims = new HashMap<>();
-		log.debug("CLAIMS {}:", claims);
 		String createToken = createToken(claims, userDetails.getUsername());
 		log.debug("CREATE TOKEN {}:", createToken);
 		log.info("END");
@@ -107,8 +104,7 @@ public class JwtUtil {
 	 * @return Token
 	 **/
 	private String createToken(Map<String, Object> claims, String subject) {
-		log.info("START");
-		log.debug("CLAIMS {}:", claims);
+		log.info(START);
 		log.debug("SUBJECT {}:", subject);
 		String token = Jwts.builder().setClaims(claims).setSubject(subject)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
@@ -128,7 +124,7 @@ public class JwtUtil {
 	 */
 
 	public Boolean validateToken(String token, UserDetails userDetails) {
-		log.info("START");
+		log.info(START);
 		log.debug("TOKEN {}:", token);
 		log.debug("USER DETAILS {}:", userDetails);
 		final String username = extractUsername(token);
@@ -143,7 +139,7 @@ public class JwtUtil {
 	 */
 
 	public Boolean validateToken(String token) {
-		log.info("START");
+		log.info(START);
 		log.debug("TOKEN {}:", token);
 		log.info("START");
 		return !isTokenExpired(token);
