@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -40,8 +41,15 @@ public class MedicalRepresentativeController {
 		ModelAndView modelAndView = new ModelAndView();
 
 		LocalDate date = DateUtil.convertToDate(scheduleStartDate);
+		LocalDate dt = LocalDate.parse("2021-06-08");
 		if (date.isBefore(LocalDate.now())) {
-			modelAndView.addObject("errorMessage", true);
+			log.debug("if condition me aaya");
+			modelAndView.addObject("errorMessage1", true);
+			modelAndView.setViewName("giveRepScheduleDate");
+			return modelAndView;
+		}
+		else if(date.isAfter(dt)) {
+			modelAndView.addObject("errorMessage2", true);
 			modelAndView.setViewName("giveRepScheduleDate");
 			return modelAndView;
 		}

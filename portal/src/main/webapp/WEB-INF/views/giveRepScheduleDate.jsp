@@ -25,13 +25,22 @@
 
 					<div style="color: red; margin: 20px">
 						<c:choose>
-							<c:when test="${errorMessage}">
+							<c:when test="${errorMessage1}">
 							Please Enter today's / upcoming date
 							</c:when>
 							<c:otherwise>
 							</c:otherwise>
 						</c:choose>
+					</div>
 
+					<div style="color: red; margin: 20px">
+						<c:choose>
+							<c:when test="${errorMessage2}">
+							Please Enter date 30 days before current date
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
 					</div>
 
 

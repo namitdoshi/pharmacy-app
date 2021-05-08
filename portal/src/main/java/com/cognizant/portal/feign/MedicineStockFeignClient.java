@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 
-@FeignClient(url = "localhost:8081", name = "medicine-stock-service")
-//@FeignClient(url="3.141.25.253:8081",name = "medicine-stock-service")
+//@FeignClient(url = "localhost:8081", name = "medicine-stock-service")
+@FeignClient(url="3.133.121.62:8081",name = "medicine-stock-service")
 
 public interface MedicineStockFeignClient {
 

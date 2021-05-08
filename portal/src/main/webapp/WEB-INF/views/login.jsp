@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="/css/style.css">
 
     <title>Login</title>
+    <style>
+      .error{
+        color : rgb(204, 24, 60) !important;
+      }
+    </style>
   </head>
   <body>
   
@@ -35,9 +40,9 @@
               <h3>Sign In</h3>
               <p class="mb-4"></p>
             </div>
-			<div class="text-center d-flex justify-content-between mt-4" style="color: crimson;">
-				<p>${errormsg}
-				</p>
+			<div class="text-center d-flex justify-content-between mt-4 error">
+				<span>${errormsg}
+        </span>
 			</div>
 			<form:errors path="usercredentials.*" />
 
@@ -53,11 +58,6 @@
                 
               </div>
               
-              <div class="d-flex mb-5 align-items-center">
-              
-                <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span> 
-              </div>
-
               <input type="submit" value="Log In" class="btn btn-block btn-primary">
 
               

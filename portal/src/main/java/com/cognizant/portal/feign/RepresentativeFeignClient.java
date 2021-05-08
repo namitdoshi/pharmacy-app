@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 
-@FeignClient(url = "localhost:8082", name = "medical-representative-schedule-service")
-//@FeignClient(url="3.141.25.253:8082", name = "medical-representative-schedule-service")
+//@FeignClient(url = "localhost:8082", name = "medical-representative-schedule-service")
+@FeignClient(url="3.133.121.62:8082", name = "medical-representative-schedule-service")
 public interface RepresentativeFeignClient {
 
 
