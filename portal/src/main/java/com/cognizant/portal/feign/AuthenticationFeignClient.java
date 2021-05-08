@@ -11,8 +11,8 @@ import com.cognizant.portal.model.UserLoginCredential;
 import com.cognizant.portal.model.UserToken;
 
 
-//@FeignClient(url="3.141.25.253:8084", name = "authorization-service")
-@FeignClient(url="localhost:8084", name = "authorization-service")
+@FeignClient(url="3.133.121.62:8084", name = "authorization-service")
+//@FeignClient(url="localhost:8084", name = "authorization-service")
 public interface AuthenticationFeignClient {
 
 	@PostMapping(path = "/api/auth/login")

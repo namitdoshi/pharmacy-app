@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.cognizant.portal.model.MedicineDemand;
 
 
-@FeignClient(url = "localhost:8083", name = "pharmacy-medicine-supply")
-//@FeignClient(url="3.141.25.253:8083", name = "pharmacy-supply-service")
+//@FeignClient(url = "localhost:8083", name = "pharmacy-medicine-supply")
+@FeignClient(url="3.133.121.62:8083", name = "pharmacy-supply-service")
 public interface PharmacySupplyFeignClient {
 
 
