@@ -14,7 +14,8 @@ import lombok.ToString;
  * THis is the entity which will be mapped to the databsae.
  */
 
-
+@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString

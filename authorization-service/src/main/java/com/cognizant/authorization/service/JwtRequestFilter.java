@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.cognizant.authorization.exception.UserNotFoundException;
 import com.cognizant.authorization.util.JwtUtil;
 
 import io.jsonwebtoken.SignatureException;
@@ -61,7 +60,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = this.custDetailsService.loadUserByUsername(username);
 			log.debug("USER DETAILS {}:", userDetails);
-			if (jwtUtil.validateToken(jwt, userDetails)) {
+			boolean tokenValidation = jwtUtil.validateToken(jwt, userDetails);
+			if (tokenValidation) {
 				log.info("TOKEN IS VALID");
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());

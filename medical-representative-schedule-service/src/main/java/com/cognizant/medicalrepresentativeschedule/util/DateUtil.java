@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DateUtil {
 
+	private DateUtil() {
+	}
 	public static LocalDate getDate(String scheduleStartDate) {
 
 		LocalDate localDate = null;

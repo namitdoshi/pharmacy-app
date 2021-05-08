@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cognizant.medicalrepresentativeschedule.exception.InvalidDateException;
 import com.cognizant.medicalrepresentativeschedule.exception.TokenValidationFailedException;
 import com.cognizant.medicalrepresentativeschedule.feignclient.AuthenticationFeignClient;
-import com.cognizant.medicalrepresentativeschedule.feignclient.MedicineStockFeignClient;
 import com.cognizant.medicalrepresentativeschedule.model.Doctor;
 import com.cognizant.medicalrepresentativeschedule.model.JwtResponse;
 import com.cognizant.medicalrepresentativeschedule.model.MedicalRepresentative;
@@ -31,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class MedRepScheduleController {
 
+	private static final String START = "Start";
 	@Autowired
 	private MedRepScheduleService scheduleService;
 
@@ -40,13 +40,11 @@ public class MedRepScheduleController {
 	@Autowired
 	private AuthenticationFeignClient authFeignClient;
 
-	@Autowired
-	private MedicineStockFeignClient medicineStockClient;
-
 	@GetMapping("/RepSchedule/{scheduleStartDate}")
-	public ResponseEntity<List<RepSchedule>> getRepSchedule(@RequestHeader(name = "Authorization") final String token, @PathVariable("scheduleStartDate") final String scheduleStartDate)
+	public ResponseEntity<List<RepSchedule>> getRepSchedule(@RequestHeader(name = "Authorization") final String token,
+			@PathVariable("scheduleStartDate") final String scheduleStartDate)
 			throws InvalidDateException, TokenValidationFailedException {
-		log.info("Start");
+		log.info(START);
 
 		log.debug("scheduleStartDate : {}", scheduleStartDate);
 
@@ -55,7 +53,8 @@ public class MedRepScheduleController {
 		LocalDate localDate = DateUtil.getDate(scheduleStartDate);
 		log.debug("localDate : {}", localDate);
 
-		if (!isValidSession(token)) {
+		boolean b = isValidSession(token);
+		if (!b) {
 			log.info("End");
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
@@ -82,7 +81,7 @@ public class MedRepScheduleController {
 	}
 
 	public Boolean isValidSession(String token) throws TokenValidationFailedException {
-		log.info("Start");
+		log.info(START);
 
 		final JwtResponse response = authFeignClient.verifyToken(token);
 
@@ -99,33 +98,23 @@ public class MedRepScheduleController {
 		return true;
 	}
 
-	@GetMapping
-	public ResponseEntity<String[]> getMedicinesByTreatingAilment(@RequestHeader(name = "Authorization") String token) {
-		log.info("Start");
-		
-		final ResponseEntity<String[]> responseEntity = ResponseEntity.of(Optional.of(medicineStockClient.getMedicinesByTreatingAilment(token, "medicine")));
-		
-		log.info("End");
-
-		return responseEntity;
-	}
-
 	@GetMapping("/medicalRepresentatives")
-	public List<MedicalRepresentative> getMedicalRepresentatives(@RequestHeader(name = "Authorization") final String token) throws TokenValidationFailedException {
-		log.info("Start");
+	public List<MedicalRepresentative> getMedicalRepresentatives(
+			@RequestHeader(name = "Authorization") final String token) throws TokenValidationFailedException {
+		log.info(START);
 
-		List<MedicalRepresentative> medicalRepresentatives = medicalRepresentativeService.getMedicalRepresentatives(token);
-		
+		List<MedicalRepresentative> medicalRepresentatives = medicalRepresentativeService.getMedicalRepresentatives();
+
 		log.info("End");
 		return medicalRepresentatives;
 	}
 
 	@GetMapping("/doctors")
 	public List<Doctor> getDoctors() {
-		log.info("Start");
-		
+		log.info(START);
+
 		List<Doctor> doctors = CsvParseUtil.parseDoctors();
-		
+
 		log.info("End");
 		return doctors;
 	}

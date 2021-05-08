@@ -14,14 +14,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CsvParseUtil {
 
+	private CsvParseUtil() {
+	}
+	
 	public static List<Doctor> parseDoctors() {
 
 		log.info("Start");
 
 		final List<Doctor> doctors = new ArrayList<>();
-		
+
 		ClassLoader classLoader = CsvParseUtil.class.getClassLoader();
-		
+
 		InputStream in = classLoader.getResourceAsStream("Doctor.csv");
 
 		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in))) {
