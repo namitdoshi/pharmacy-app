@@ -15,8 +15,8 @@
 				<img class="card-img-top" src="https://images.unsplash.com/photo-1506485338023-6ce5f36692df?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="img medical representative">
 				<div class="card-body">
 					<h5 class="card-title">Medical Representatives Schedule</h5>
-					<p class="card-text">Click here to view medical representatives
-						schedule for doctors visit.</p>
+					<p class="card-text">Click here to schedule a meeting with medical 
+						representatives for doctors visit.</p>
 
 					<a class="btn btn-primary" href="/user/schedule">Medical
 						Representative</a>
