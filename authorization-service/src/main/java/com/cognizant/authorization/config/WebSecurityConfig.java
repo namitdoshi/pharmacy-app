@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * This class is used for the security configuration. It extends the class
  * WebSecurityConfigurerAdapter It will take care of the authentication and
- * authorization based on the user credentials.
+ * authorization based on the user credentials. It will get configured when we will run the tomcat server.
  */
 @Slf4j
 @EnableWebSecurity
@@ -39,6 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		super.configure(auth);
 		auth.userDetailsService(userDetailsService);
 	}
+
+	/**
+	 * These URLs will be permitted for authorization. The URL we are giving to the method
+	 * antMatchers().
+	 */
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -74,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		log.info("START");
-		web.ignoring().antMatchers("/h2-console/**","/swagger-ui/**","/swagger-ui.html");
+		web.ignoring().antMatchers("/swagger-ui/**","/h2-console/**","/**");
 		log.info("END");
 	}
 

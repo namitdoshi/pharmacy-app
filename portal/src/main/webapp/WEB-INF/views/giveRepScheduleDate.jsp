@@ -36,7 +36,7 @@
 					<div style="color: red; margin: 20px">
 						<c:choose>
 							<c:when test="${errorMessage2}">
-							Please Enter date 30 days before current date
+							Date out of service
 							</c:when>
 							<c:otherwise>
 							</c:otherwise>

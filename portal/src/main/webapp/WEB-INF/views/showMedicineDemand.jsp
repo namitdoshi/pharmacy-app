@@ -66,7 +66,7 @@
 		.container th {
 			padding-bottom: 2%;
 			padding-top: 2%;
-			padding-left: 0.5%;
+			padding-left: 2%;
 		}
 
 		/* Background-color of the odd rows */
@@ -118,11 +118,11 @@
 			<table class="container">
 				<thead>
 					<tr>
-						<th>Medicine</th>
-						<th>Demand Count</th>
+						<th><h1>Medicine</h1></th>
+						<th><h1>Demand Count</h1></th>
 					</tr>
 				</thead>
-				<tbody></tbody>
+				<tbody>
 				<c:forEach items="${medicineDemandList}" var="medicineDemand">
 					<tr>
 						<td class="col-right">${medicineDemand.medicineName}</td>
