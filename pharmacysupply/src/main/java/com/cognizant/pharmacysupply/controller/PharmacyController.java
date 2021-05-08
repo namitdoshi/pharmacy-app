@@ -29,6 +29,15 @@ public class PharmacyController {
 	@Autowired
 	private PharmacyServiceImpl pharmacyService;
 	
+	/*
+	 *  Method Name --> getPharmacySupply
+	 *  @param      --> Medicine Demand 
+	 *  @return     --> Pharmacy Supply
+	 *  This method takes medicine demand i.e. medicine name and demand count
+	 *  as input and checks it with the stock.
+	 *  If demand is less than or equal to stock then order is placed. 
+	 */
+	
 	@PostMapping("/pharmacy-supply")
 	public ResponseEntity<?> getPharmacySupply(@RequestHeader(name = "Authorization") String token,
 			@Valid @RequestBody List<MedicineDemand> medicineDemandList) throws MedicineNotFoundException {
@@ -50,6 +59,12 @@ public class PharmacyController {
 		throw new TokenValidationFailedException(TOKEN_IS_NO_LONGER_VALID);
 	}
 	
+	/*
+	 *  Method Name --> getMedicineSupply
+	 *  @param      --> No params
+	 *  @return     --> Medicine Supplied
+	 *  This method returns the medicine supplied till this time.
+	 */
 
 	@GetMapping("/getMedicineSupply")
 	public ResponseEntity<?> getMedicineSupply(@RequestHeader("Authorization") String token) {
@@ -61,7 +76,13 @@ public class PharmacyController {
 		throw new TokenValidationFailedException(TOKEN_IS_NO_LONGER_VALID);
 	}
 
-// To do: this mapping can be removed or simplified
+	/*
+	 *  Method Name --> getMedicineDemand
+	 *  @param      --> Null
+	 *  @return     --> Medicine Demanded
+	 *  This method returns the medicine demanded till this time.
+	 */
+	
 	@GetMapping("/getMedicineDemand")
 	public ResponseEntity<?> getMedicineDemand(@RequestHeader(name = "Authorization") String token) {
 		List<MedicineDemand> medicineDemand = null;

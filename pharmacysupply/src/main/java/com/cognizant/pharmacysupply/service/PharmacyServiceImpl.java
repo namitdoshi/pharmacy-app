@@ -40,8 +40,18 @@ public class PharmacyServiceImpl implements PharmacyService {
 	private AuthFeignClient authFeign;
 
 	@Autowired
-	private MedicineStockFeignClient stockFeignClient; 
+	private MedicineStockFeignClient stockFeignClient;
 
+	/**
+	 * Gets the supply details from stock on providing demand count as input. The
+	 * supply count is fetched from the medicine stock service via feign client. And
+	 * if the medicine demand count is higher then the medicine supply count we are
+	 * setting demand count as supply count. Method Name --> getPharmacySupplyCount
+	 * 
+	 * @param --> token
+	 * @param --> medicineDemandList
+	 * @return --> List of MedicineSupply *
+	 */
 	@Override
 	public List<PharmacyMedicineSupply> getPharmacySupplyCount(String token, List<MedicineDemand> medicineDemandList)
 			throws MedicineNotFoundException {
@@ -70,6 +80,16 @@ public class PharmacyServiceImpl implements PharmacyService {
 		return list;
 	}
 
+	/**
+	 * This method updates the stock after a successfull order has been placed
+	 * Method Name --> setSupplu
+	 * 
+	 * @param --> token
+	 * @param --> medicineSupply
+	 * @param --> medicineDemand
+	 * @return --> null *
+	 */
+
 	public void setSupply(String token, PharmacyMedicineSupply medicineSupply, MedicineDemand medicineDemand,
 			MedicineStock medicineStock) throws MedicineNotFoundException {
 		log.info(START);
@@ -96,6 +116,17 @@ public class PharmacyServiceImpl implements PharmacyService {
 		log.info("End");
 	}
 
+	/**
+	 * Gets the supply count from stock on giving demand count as input. supply
+	 * count is fetched from the medicine stock service via feign client. And if the
+	 * medicine demand count is higher then the medicine supply count we are setting
+	 * demand count as supply count. Method Name --> getNumberOfTablets
+	 * 
+	 * @param --> token
+	 * @param --> medicineDemandList
+	 * @return --> List of MedicineSupply
+	 */
+
 	public MedicineStock getNumberOfTablets(String token, MedicineDemand medicineDemand)
 			throws MedicineNotFoundException {
 		log.info(START);
@@ -114,11 +145,26 @@ public class PharmacyServiceImpl implements PharmacyService {
 		return medicineStock;
 	}
 
+	/**
+	 * From the database we are fetching the MedicineDemand. It invokes the
+	 * findAll() method which is present in the JpaRepository interface. 
+	 * Method Name --> getMedicineDemand
+	 * 
+	 * @return --> List of medicine demand
+	 */
 	@Override
 	public List<MedicineDemand> getMedicineDemand() {
 		log.info(START);
 		return medicineDemandRepo.findAll();
 	}
+
+	/**
+	 * From the database we are fetching all the. It invokes the findAll() method
+	 * which is present in the JPARepository interface.
+	 * Method Name --> getMedicineSupply
+	 * 
+	 * @return --> List of medicine supply
+	 */
 
 	@Override
 	public List<PharmacyMedicineSupply> getMedicineSupply() {
@@ -126,6 +172,12 @@ public class PharmacyServiceImpl implements PharmacyService {
 		return pharmacyMedicineSupplyRepository.findAll();
 	}
 
+	/**
+	 * Validate the token received inside the Authorization part of the header
+	 * Method Name --> validateToken
+	 * 
+	 * @return --> List of medicine supply
+	 */
 	@Override
 	public Boolean validateToken(String token) {
 		log.info("Validating token");
