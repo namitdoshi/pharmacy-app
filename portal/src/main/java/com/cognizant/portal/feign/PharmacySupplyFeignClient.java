@@ -12,7 +12,7 @@ import com.cognizant.portal.model.MedicineDemand;
 
 
 //@FeignClient(url = "localhost:8083", name = "pharmacy-medicine-supply")
-@FeignClient(url="3.133.121.62:8083", name = "pharmacy-supply-service")
+@FeignClient(url="18.219.27.119:8083", name = "pharmacy-supply-service")
 public interface PharmacySupplyFeignClient {
 
 

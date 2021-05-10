@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 
 //@FeignClient(url = "localhost:8081", name = "medicine-stock-service")
-@FeignClient(url="3.133.121.62:8081",name = "medicine-stock-service")
+@FeignClient(url="18.219.27.119:8081",name = "medicine-stock-service")
 
 public interface MedicineStockFeignClient {
 

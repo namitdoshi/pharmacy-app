@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import com.cognizant.portal.model.UserLoginCredential;
 import com.cognizant.portal.model.UserToken;
 
-
-@FeignClient(url="3.133.121.62:8084", name = "authorization-service")
+@FeignClient(url="18.219.27.119:8084", name = "authorization-service")
 //@FeignClient(url="localhost:8084", name = "authorization-service")
 public interface AuthenticationFeignClient {
 

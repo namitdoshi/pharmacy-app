@@ -1,5 +1,6 @@
 package com.cognizant.portal.controller;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class LoginController {
 
 	@PostMapping("/homepage")
 	public ModelAndView userLogin(@ModelAttribute("usercredentials") UserLoginCredential usercredentials,
-			BindingResult bindingresult, HttpSession session) {
+			BindingResult bindingresult, HttpSession session,final HttpServletResponse resp) {
 
 		log.debug("username{}: ", usercredentials.getUserid());
 		ResponseEntity<?> response = null;
@@ -80,16 +81,16 @@ public class LoginController {
 		session.setAttribute("token", userToken.getAuthToken());
 
 		log.debug("session{}:", session.toString());
-
-		ModelAndView modelAndView = new ModelAndView("homepage");
-		return modelAndView;
-
+		resp.addHeader("Cache-Control", "max-age=0, must-revalidate, no-transform");
+		
+		return new ModelAndView("homepage");
 	}
 
 
 	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session,final HttpServletResponse response) {
 		session.setAttribute("token", null);
+		response.addHeader("Cache-Control", "max-age=0, must-revalidate, no-transform");
 		return "login";
 	}
 
